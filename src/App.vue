@@ -1,5 +1,5 @@
 <template>
-    <input type="range" v-model="store.color">
+    <input type="range" :value="store.color" @input="store.setColor($event.target.value)" >
     <div>app {{store}}</div>
     <ColorPanel />
 </template>
