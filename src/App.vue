@@ -1,13 +1,12 @@
 <template>
-    <input type="range" :value="hue" @input="newHue" min="0" max="359" >
-    <br>
-    <small><pre style="display: inline-block">app {{store}}</pre></small>
+    <input type="range" :value="hue" @input="newHue" min="0" max="359" > {{hue}}
+    <!-- <br><small><pre style="display: inline-block">app {{store}}</pre></small> -->
     <ColorPanel />
 </template>
 
 <script lang="ts">
     import { defineComponent, toRef, toRefs } from "vue";
-    import { ColorItem, MainStore, setColor, setHue } from './store';
+    import { MainStore, setColor, setHue } from './store';
     import ColorPanel from "./components/ColorPanel.vue";
 
     export default defineComponent({

@@ -16,7 +16,9 @@ export interface ColorItem {
     alt?: string; // Alternative Name
 }
 
-export const ColorItems: ColorItemRaw[] = [
+//#region color items
+
+const AllColorItems: ColorItemRaw[] = [
     {
         type: 'light',
         name: 'aliceblue',
@@ -1064,10 +1066,7 @@ export const ColorItems: ColorItemRaw[] = [
     }
 ];
 
-const { abs } = Math;
-const getNumbers = (n: number) => [...Array(n).keys()];
-
-const removeAlternativeColors = (colorList: ColorItemRaw[]) => {
+const removeAlternativeColors = (colorList: ColorItemRaw[]): ColorItemRaw[] => {
     return colorList.map((color: ColorItemRaw) => {
         const equivalent = colorList.find(c => c !== color && c.hex === color.hex);
         return !equivalent || color.alt === equivalent.name ? color : null;
@@ -1079,6 +1078,13 @@ const parseColorStrings = (color: ColorItemRaw): ColorItem => ({
     rgb: color.rgb.match(/rgb\((\d+),(\d+),(\d+)\)/).slice(1).map(Number) as [number, number, number],
     hsl: color.hsl.match(/hsl\((.*),(.*)%,(.*)%\)/).slice(1).map(Number) as [number, number, number],
 });
+
+export const clearList: ColorItem[] = removeAlternativeColors(AllColorItems).map(parseColorStrings);
+
+//#endregion color items
+
+const { abs } = Math;
+const getNumbers = (n: number) => [...Array(n).keys()];
 
 const isMonochrome = (color: ColorItem) => color.hsl[1] === 0;
 const isNonMonochrome = (color: ColorItem) => !isMonochrome(color);

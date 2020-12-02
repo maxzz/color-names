@@ -1,10 +1,14 @@
 <template>
-    <small><pre style="display: inline-block">pan {{store}}</pre></small>
+    <!-- <small><pre style="display: inline-block">pan {{store}}</pre></small> -->
     <div class="cpanel-container">
         <div class="cpanel">
             
             <div class="row" v-for="(group, index) of store.state.colors" :key="index">
-                <button class="color-button" v-for="(color, index) of group.items" :key="index" :style="{backgroundColor: color.name}">
+                <button
+                    v-for="(color, index) of group" :key="index"
+                    :style="{backgroundColor: color.name, color: color.type === 'light' ? 'black' : 'white'}"
+                    class="color-button"
+                >
                      {{color.name}}
                 </button>
             </div>
@@ -99,13 +103,14 @@
                 margin: 0;
                 appearance: none;
                 border: none;
-                font-size: .6em;
-                user-select: none;
+                font-size: .7em;
+                text-transform: uppercase;
                 transition: transform .2s;
+                user-select: none;
 
                 &:hover, &:focus {
                     outline: none;
-                    transform: scale(1.04);
+                    transform: scale(1.02);
                     box-shadow: 3px 3px 10px rgba(0, 0, 0, .125);
                 }
             }

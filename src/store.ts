@@ -1,17 +1,11 @@
-import { reactive } from "vue";
+import { reactive } from 'vue';
+import { ColorItem, clearList, groupColors } from './colors';
 
-export interface ColorItem {
-    name: string;
-    textDark: true;
-}
-
-export interface ColorGroup {
-    items: ColorItem[];
-}
+const colorList: ColorItem[] = clearList;
 
 export type State = {
     color: string;
-    colors: ColorGroup[];
+    colors: ColorItem[][];
     hue: number;
 };
 
@@ -27,36 +21,13 @@ export const setColor = (val: string) => {
     MainStore.state.color = val;
 }
 
-export const setGroups = (colors: ColorGroup[]) => {
+export const setGroups = (colors: ColorItem[][]) => {
     MainStore.state.colors = colors;
 }
-
-const colors: ColorItem[] = [
-    {
-        name: 'powderblue',
-        textDark: true
-    },
-    {
-        name: 'lightblue',
-        textDark: true
-    }
-];
-
-const colors2: ColorItem[] = [
-    {
-        name: 'deepskyblue',
-        textDark: true
-    },
-];
 
 export const setHue = (hue: number) => {
     MainStore.state.hue = hue;
 
-    setGroups([
-        {
-            items: colors
-        }, {
-            items: colors2
-        },
-    ]);
+    const groups = groupColors({ colorList, hue, tolerance: {min: 5}, mono: false });
+    MainStore.state.colors = groups.list;
 }
