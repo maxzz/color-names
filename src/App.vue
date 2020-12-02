@@ -11,20 +11,19 @@
                 </div>
                 <hr>
                 <div>
-                    #: {{color.hex}}
+                    <span v-if="color">{{color.hex}}</span>
                 </div>
                 <div>
-                    rgb: {{color.rgb}}
+                    <span v-if="color">{{formatRGB(color.rgb)}}</span>
                 </div>
                 <div>
-                    hsl: {{color.hsl}}
+                    <span v-if="color">{{formatHSL(color.hsl)}}</span>
                 </div>
             </div>
             <input ref="hueSlider" class="hue-slider" type="range" :value="hue" @input="newHue" min="0" max="360">
         </div>
         <!-- <br><small><pre style="display: inline-block">app {{store}}</pre></small> -->
         <ColorPanel />
-        {{store.state.color}}
     </section>
 </template>
 
@@ -49,6 +48,9 @@
 
             setHue(204);
 
+            const formatRGB = (rgb: [number, number, number]) => `rgb(${rgb.join(', ')})`
+            const formatHSL = (hsl: [number, number, number]) => `hsl(${hsl.map((_, i) => i === 0 ? _ : `${_}%`).join(', ')})`
+
             return {
                 hue: toRef(store.state, 'hue'),
                 tolerance: toRef(store.state, 'tolerance'),
@@ -56,6 +58,8 @@
                 store,
                 newHue,
                 hueSlider,
+                formatRGB,
+                formatHSL,
             };
         },
     });

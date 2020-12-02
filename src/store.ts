@@ -12,13 +12,7 @@ export type State = {
 
 export const MainStore = reactive({
     state: reactive<State>({
-        color: parseColorStrings({
-            type: 'light',
-            name: 'azure',
-            rgb: 'rgb(240,255,255)',
-            hsl: 'hsl(180,100%,97.1%)',
-            hex: '#F0FFFF'
-        }),
+        color: null,
         colors: [],
         hue: 0,
         tolerance: 0,
@@ -35,6 +29,7 @@ export const setHue = (hue: number) => {
     const groups = groupColors({ colorList, hue, tolerance: {min: 5}, mono: false });
     MainStore.state.colors = groups.list;
     MainStore.state.tolerance = groups.tolerance;
+    MainStore.state.color = null;
 }
 
 export const setCurrentColor = (color: ColorItem) => {

@@ -26,9 +26,6 @@
     export default defineComponent({
         setup() {
             const store = MainStore;
-            function setColor() {
-                
-            }
             return {
                 store,
                 setCurrentColor,
