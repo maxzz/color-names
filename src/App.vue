@@ -10,14 +10,13 @@
                     Tolerance: {{tolerance}}
                 </div>
                 <hr>
-                <div>
-                    <span v-if="color">{{color.hex}}</span>
-                </div>
-                <div>
-                    <span v-if="color">{{formatRGB(color.rgb)}}</span>
-                </div>
-                <div>
-                    <span v-if="color">{{formatHSL(color.hsl)}}</span>
+                <div class="hue-colors">
+                    <div v-if="color">
+                        <div>{{color.name}}</div>
+                        <div>{{color.hex}}</div>
+                        <div>{{formatRGB(color.rgb)}}</div>
+                        <div>{{formatHSL(color.hsl)}}</div>
+                    </div>
                 </div>
             </div>
             <input ref="hueSlider" class="hue-slider" type="range" :value="hue" @input="newHue" min="0" max="360">
@@ -36,8 +35,9 @@
         components: { ColorPanel },
         setup() {
             const store = MainStore;
-
             const hueSlider = ref<HTMLInputElement>(null);
+
+            setHue(204);
 
             function newHue(event) {
                 let val = +event.target.value;
@@ -46,10 +46,10 @@
                 hueSlider.value.style.setProperty('--pos', ''+pos);
             }
 
-            setHue(204);
+            const formatRGB = (rgb: [number, number, number]) => `rgb(${rgb.join(', ')})`;
+            const formatHSL = (hsl: [number, number, number]) => `hsl(${hsl.map((_, i) => i === 0 ? _ : `${_}%`).join(', ')})`;
 
-            const formatRGB = (rgb: [number, number, number]) => `rgb(${rgb.join(', ')})`
-            const formatHSL = (hsl: [number, number, number]) => `hsl(${hsl.map((_, i) => i === 0 ? _ : `${_}%`).join(', ')})`
+            //TODO: auto select color
 
             return {
                 hue: toRef(store.state, 'hue'),
@@ -89,8 +89,12 @@
         margin: 0 auto;
     }
     .hue-info {
-        min-width: 8em;
+        min-width: 12em;
         font-size: .8em;
+
+        .hue-colors {
+            min-height: 5em;
+        }
     }
     .hue-controls {
         width: 100%;
