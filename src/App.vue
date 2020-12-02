@@ -1,12 +1,12 @@
 <template>
-    <input type="range" :value="color" @input="setColor" >
+    <input type="range" :value="color" @input="setColor" min="0" max="359" >
     <div>app {{store}}</div>
     <ColorPanel />
 </template>
 
 <script lang="ts">
     import { defineComponent, toRefs } from "vue";
-    import { MainStore } from './store.ts';
+    import { ColorItem, MainStore } from './store';
     import ColorPanel from "./components/ColorPanel.vue";
 
     export default defineComponent({
@@ -16,6 +16,15 @@
             function setColor(event) {
                 store.setColor(event.target.value);
             }
+
+            const colors: ColorItem[] = [
+                {
+                    name: '#aaa',
+                    textDark: true
+                }
+            ];
+            store.setColors(colors);
+
             return {
                 ...toRefs(store.state),
                 store,
