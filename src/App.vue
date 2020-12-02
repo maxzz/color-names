@@ -1,7 +1,15 @@
 <template>
     <section>
         <div class="hue-controls">
-            <span>Hue: {{hue}}</span> <input ref="hueSlider" class="hue-slider" type="range" :value="hue" @input="newHue" min="0" max="360">
+            <div class="hue-info">
+                <div>
+                    Hue: {{hue}}
+                </div>
+                <div>
+                    Tolerance: {{tolerance}}
+                </div>
+            </div>
+            <input ref="hueSlider" class="hue-slider" type="range" :value="hue" @input="newHue" min="0" max="360">
         </div>
         <!-- <br><small><pre style="display: inline-block">app {{store}}</pre></small> -->
         <ColorPanel />
@@ -31,6 +39,7 @@
 
             return {
                 hue: toRef(store.state, 'hue'),
+                tolerance: toRef(store.state, 'tolerance'),
                 store,
                 newHue,
                 hueSlider,
@@ -61,6 +70,10 @@
     section {
         position: relative;
         margin: 0 auto;
+    }
+    .hue-info {
+        min-width: 8em;
+        font-size: .8em;
     }
     .hue-controls {
         width: 100%;

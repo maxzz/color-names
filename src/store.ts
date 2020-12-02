@@ -7,6 +7,7 @@ export type State = {
     color: string;
     colors: ColorItem[][];
     hue: number;
+    tolerance: number;
 };
 
 export const MainStore = reactive({
@@ -14,6 +15,7 @@ export const MainStore = reactive({
         color: 'tomato',
         colors: [],
         hue: 30,
+        tolerance: 0,
     }),
 });
 
@@ -30,4 +32,5 @@ export const setHue = (hue: number) => {
 
     const groups = groupColors({ colorList, hue, tolerance: {min: 5}, mono: false });
     MainStore.state.colors = groups.list;
+    MainStore.state.tolerance = groups.tolerance;
 }
