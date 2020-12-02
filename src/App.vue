@@ -1,6 +1,7 @@
 <template>
     <input type="range" :value="color" @input="setColor" min="0" max="359" >
-    <div>app {{store}}</div>
+    <br>
+    <small><pre style="display: inline-block">app {{store}}</pre></small>
     <ColorPanel />
 </template>
 

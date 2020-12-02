@@ -5,20 +5,25 @@ export interface ColorItem {
     textDark: true;
 }
 
-type State = {
+export type State = {
     color: string;
     currentColors: ColorItem[];
+    hue: number;
 };
 
 export const MainStore = reactive({
     state: reactive<State>({
         color: 'tomato',
         currentColors: [],
+        hue: 30,
     }),
     setColor(val: string) {
         this.state.color = val;
     },
     setColors(colors: ColorItem[]) {
         this.state.currentColors = colors;
-    }
+    },
+    setHue(hue: number) {
+
+    },
 });

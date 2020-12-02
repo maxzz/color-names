@@ -1,5 +1,5 @@
 <template>
-    pan {{store}}
+    <small><pre style="display: inline-block">pan {{store}}</pre></small>
     <div class="cpanel-container">
         <div class="cpanel">
             <div class="row">
