@@ -2,11 +2,11 @@
     <div class="cpanel-container">
         <div class="cpanel">
             <div class="row">
-                <button>#0044dd</button>
-                <button>#0044dd</button>
+                <button class="color-button">#0044dd</button>
+                <button class="color-button">#0044dd</button>
             </div>
             <div class="row">
-                <button>#0044dd</button>
+                <button class="color-button">#0044dd</button>
             </div>
         </div>
         <div class="axis axis-lightness">lightness</div>
@@ -90,6 +90,21 @@
         .row {
             display: grid;
             grid-auto-flow: column;
+
+            .color-button {
+                margin: 0;
+                appearance: none;
+                border: none;
+                font-size: .6em;
+                user-select: none;
+                transition: transform .2s;
+
+                &:hover, &:focus {
+                    outline: none;
+                    transform: scale(1.04);
+                    box-shadow: 3px 3px 10px rgba(0, 0, 0, .125);
+                }
+            }
         }
     }
 </style>
