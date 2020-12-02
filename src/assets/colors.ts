@@ -1,13 +1,22 @@
-export interface ColorItem {
+export interface ColorItemRaw {
     type: 'light' | 'dark';
     name: string;
     rgb: string;
     hsl: string;
     hex: string;
-    alt?: string;
+    alt?: string; // Alternative Name
 }
 
-const ColorItems: ColorItem[] = [
+export interface ColorItem {
+    type: 'light' | 'dark';
+    name: string;
+    rgb: [number, number, number];
+    hsl: [number, number, number];
+    hex: string;
+    alt?: string; // Alternative Name
+}
+
+export const ColorItems: ColorItemRaw[] = [
     {
         type: 'light',
         name: 'aliceblue',
@@ -1055,4 +1064,63 @@ const ColorItems: ColorItem[] = [
     }
 ];
 
-export default ColorItems;
+const { abs } = Math;
+const getNumbers = (n: number) => [...Array(n).keys()];
+
+const removeAlternativeColors = (colorList: ColorItemRaw[]) => {
+    return colorList.map((color: ColorItemRaw) => {
+        const equivalent = colorList.find(c => c !== color && c.hex === color.hex);
+        return !equivalent || color.alt === equivalent.name ? color : null;
+    }).filter(Boolean);
+}
+
+const parseColorStrings = (color: ColorItemRaw): ColorItem => ({
+    ...color,
+    rgb: color.rgb.match(/rgb\((\d+),(\d+),(\d+)\)/).slice(1).map(Number) as [number, number, number],
+    hsl: color.hsl.match(/hsl\((.*),(.*)%,(.*)%\)/).slice(1).map(Number) as [number, number, number],
+});
+
+const isMonochrome = (color: ColorItem) => color.hsl[1] === 0;
+const isNonMonochrome = (color: ColorItem) => !isMonochrome(color);
+
+const filterColorsByHue = (colorList: ColorItem[], hue: number, tolerance: number): {list: ColorItem[], tolerance: number} => {
+    if (tolerance > 180) {
+        return {
+            list: [], // TODO: Return default red color
+            tolerance
+        };
+    }
+    const colors = colorList.filter((color: ColorItem) => abs(hue - color.hsl[0]) < tolerance);
+    if (colors.length) {
+        return {
+            list: colors,
+            tolerance
+        };
+    }
+    return filterColorsByHue(colorList, hue, tolerance + 1);
+}
+
+const groupColorsByLightness = (colorList: ColorItem[], tolerance: number): ColorItem[][] => {
+    return getNumbers(100 / tolerance + 1).map(
+        (t: number) => colorList.filter((color: ColorItem) => {
+            const difference = 100 - color.hsl[2] - t * tolerance;
+            const differenceLimit = tolerance / 2;
+            if (abs(difference) === differenceLimit) {
+                return difference > 0;
+            }
+            return abs(difference) < differenceLimit;
+        })
+    ).filter(group => !!group.length);
+}
+
+export const groupColors = ({ colorList, hue, tolerance, mono }: { colorList: ColorItem[], hue: number, tolerance: { min: number }, mono: boolean }) => {
+    const baseColors = colorList.filter(mono ? isMonochrome : isNonMonochrome);
+    const sortedColors = [...baseColors].sort((a, b) => a.hsl[1] - b.hsl[1]);
+    const colorsFilteredByHue = filterColorsByHue(sortedColors, hue, tolerance.min);
+    const lightnessGroups = groupColorsByLightness(colorsFilteredByHue.list, tolerance.min);
+
+    return {
+        list: lightnessGroups,
+        tolerance: colorsFilteredByHue.tolerance
+    };
+}
