@@ -39,7 +39,7 @@
             const store = MainStore;
             const hueSlider = ref<HTMLInputElement>(null);
 
-            setHue(204);
+            setHue(32); //204
 
             function newHue(event) {
                 let val = +event.target.value;
@@ -52,6 +52,8 @@
             const formatHSL = (hsl: [number, number, number]) => `hsl(${hsl.map((_, i) => i === 0 ? _ : `${_}%`).join(', ')})`;
 
             //TODO: auto select color
+            //TODO: tolerance marks
+            //TODO: white frame around color panel with shadow
 
             return {
                 hue: toRef(store.state, 'hue'),
