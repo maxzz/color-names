@@ -52,10 +52,11 @@ const colors2: ColorItem[] = [
 export const setHue = (hue: number) => {
     MainStore.state.hue = hue;
 
-    setGroups([{
-        items: colors
-    }, {
-        items: colors2
-    },
+    setGroups([
+        {
+            items: colors
+        }, {
+            items: colors2
+        },
     ]);
 }

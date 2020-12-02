@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, toRefs } from "vue";
+    import { defineComponent, toRef, toRefs } from "vue";
     import { ColorItem, MainStore, setColor, setHue } from './store';
     import ColorPanel from "./components/ColorPanel.vue";
 
@@ -14,15 +14,15 @@
         components: { ColorPanel },
         setup() {
             const store = MainStore;
-            
+
             function newHue(event) {
-                setColor(event.target.value);
+                setHue(event.target.value);
             }
 
             setHue(40);
 
             return {
-                ...toRefs(store.state),
+                hue: toRef(store.state, 'hue'),
                 store,
                 newHue,
             };
