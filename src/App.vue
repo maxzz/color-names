@@ -1,7 +1,7 @@
 <template>
     <section>
         <div class="hue-controls">
-            <span>Hue: {{hue}}</span> <input class="hue-slider" type="range" :value="hue" @input="newHue" min="0" max="359">
+            <span>Hue: {{hue}}</span> <input ref="hueSlider" class="hue-slider" type="range" :value="hue" @input="newHue" min="0" max="360">
         </div>
         <!-- <br><small><pre style="display: inline-block">app {{store}}</pre></small> -->
         <ColorPanel />
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, toRef, toRefs } from "vue";
+    import { defineComponent, ref, toRef, toRefs } from "vue";
     import { MainStore, setColor, setHue } from './store';
     import ColorPanel from "./components/ColorPanel.vue";
 
@@ -18,8 +18,13 @@
         setup() {
             const store = MainStore;
 
+            const hueSlider = ref<HTMLInputElement>(null);
+
             function newHue(event) {
-                setHue(event.target.value);
+                let val = +event.target.value;
+                setHue(val);
+                let pos = val / 360;
+                hueSlider.value.style.setProperty('--pos', ''+pos);
             }
 
             setHue(40);
@@ -28,6 +33,7 @@
                 hue: toRef(store.state, 'hue'),
                 store,
                 newHue,
+                hueSlider,
             };
         },
     });
