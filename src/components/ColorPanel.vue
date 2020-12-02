@@ -8,6 +8,7 @@
                     v-for="(color, index) of group" :key="index"
                     :style="{backgroundColor: color.name, color: color.type === 'light' ? 'black' : 'white'}"
                     class="color-button"
+                    @click="setCurrentColor(color)"
                 >
                      {{color.name}}
                 </button>
@@ -20,13 +21,17 @@
 
 <script lang="ts">
     import { defineComponent } from "vue";
-    import { MainStore } from '../store';
+    import { MainStore, setCurrentColor } from '../store';
 
     export default defineComponent({
         setup() {
             const store = MainStore;
+            function setColor() {
+                
+            }
             return {
-                store
+                store,
+                setCurrentColor,
             };
         },
     });

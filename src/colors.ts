@@ -1073,7 +1073,7 @@ const removeAlternativeColors = (colorList: ColorItemRaw[]): ColorItemRaw[] => {
     }).filter(Boolean);
 }
 
-const parseColorStrings = (color: ColorItemRaw): ColorItem => ({
+export const parseColorStrings = (color: ColorItemRaw): ColorItem => ({
     ...color,
     rgb: color.rgb.match(/rgb\((\d+),(\d+),(\d+)\)/).slice(1).map(Number) as [number, number, number],
     hsl: color.hsl.match(/hsl\((.*),(.*)%,(.*)%\)/).slice(1).map(Number) as [number, number, number],
