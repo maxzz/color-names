@@ -2,12 +2,11 @@
     <small><pre style="display: inline-block">pan {{store}}</pre></small>
     <div class="cpanel-container">
         <div class="cpanel">
-            <div class="row">
-                <button class="color-button">#0044dd</button>
-                <button class="color-button">#0044dd</button>
-            </div>
-            <div class="row">
-                <button class="color-button">#0044dd</button>
+            
+            <div class="row" v-for="(group, index) of store.state.colors" :key="index">
+                <button class="color-button" v-for="(color, index) of group.items" :key="index" :style="{backgroundColor: color.name}">
+                     {{color.name}}
+                </button>
             </div>
         </div>
         <div class="axis axis-lightness">lightness</div>
@@ -17,7 +16,7 @@
 
 <script lang="ts">
     import { defineComponent } from "vue";
-    import { MainStore } from '../store.ts';
+    import { MainStore } from '../store';
 
     export default defineComponent({
         setup() {
