@@ -3,6 +3,8 @@
         <div class="hue-controls">
             <div class="hue-info">
                 <br>
+                <br>
+                <br>
                 <div>
                     Hue: {{hue}}
                 </div>
