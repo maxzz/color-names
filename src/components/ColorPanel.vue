@@ -1,4 +1,5 @@
 <template>
+    pan {{store}}
     <div class="cpanel-container">
         <div class="cpanel">
             <div class="row">
@@ -16,10 +17,14 @@
 
 <script lang="ts">
     import { defineComponent } from "vue";
+    import { MainStore } from '../store.ts';
 
     export default defineComponent({
         setup() {
-            return {};
+            const store = MainStore;
+            return {
+                store
+            };
         },
     });
 </script>

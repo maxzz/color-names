@@ -1,16 +1,21 @@
 <template>
-    <div>app</div>
+    <input type="range" v-model="store.color">
+    <div>app {{store}}</div>
     <ColorPanel />
 </template>
 
 <script lang="ts">
     import { defineComponent } from "vue";
+    import { MainStore } from './store.ts';
     import ColorPanel from "./components/ColorPanel.vue";
 
     export default defineComponent({
         components: { ColorPanel },
         setup() {
-            return {};
+            const store = MainStore;
+            return {
+                store
+            };
         },
     });
 </script>
