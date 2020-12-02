@@ -25,27 +25,7 @@
 </script>
 
 <style lang="scss">
-    .cpanel-container {
-        position: relative;
-        width: var(--content-width);
-        height: var(--content-width);
-
-        /*temp*/
-        margin: 0 auto;
-        background-color: red;
-    }
-
-    .cpanel {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        display: grid;
-
-        .row {
-            display: grid;
-            grid-auto-flow: column;
-        }
-    }
+    //#region axises
 
     $axis-color: #bbb;
 
@@ -85,5 +65,31 @@
 
     .axis-saturation {
         transform: translateY(70%);
+    }
+
+    //#endregion axises
+</style>
+
+<style lang="scss">
+    .cpanel-container {
+        position: relative;
+        width: var(--content-width);
+        height: var(--content-width);
+
+        /*temp*/
+        margin: 0 auto;
+        background-color: red;
+    }
+
+    .cpanel {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: grid;
+
+        .row {
+            display: grid;
+            grid-auto-flow: column;
+        }
     }
 </style>
