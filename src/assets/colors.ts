@@ -1084,12 +1084,6 @@ const isMonochrome = (color: ColorItem) => color.hsl[1] === 0;
 const isNonMonochrome = (color: ColorItem) => !isMonochrome(color);
 
 const filterColorsByHue = (colorList: ColorItem[], hue: number, tolerance: number): {list: ColorItem[], tolerance: number} => {
-    if (tolerance > 180) {
-        return {
-            list: [], // TODO: Return default red color
-            tolerance
-        };
-    }
     const colors = colorList.filter((color: ColorItem) => abs(hue - color.hsl[0]) < tolerance);
     if (colors.length) {
         return {
@@ -1116,7 +1110,7 @@ const groupColorsByLightness = (colorList: ColorItem[], tolerance: number): Colo
 export const groupColors = ({ colorList, hue, tolerance, mono }: { colorList: ColorItem[], hue: number, tolerance: { min: number }, mono: boolean }) => {
     const baseColors = colorList.filter(mono ? isMonochrome : isNonMonochrome);
     const sortedColors = [...baseColors].sort((a, b) => a.hsl[1] - b.hsl[1]);
-    const colorsFilteredByHue = filterColorsByHue(sortedColors, hue, tolerance.min);
+    const colorsFilteredByHue = filterColorsByHue(sortedColors, (hue || 0) % 360, tolerance.min);
     const lightnessGroups = groupColorsByLightness(colorsFilteredByHue.list, tolerance.min);
 
     return {
