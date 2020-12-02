@@ -83,10 +83,6 @@
         position: relative;
         width: var(--content-width);
         height: var(--content-width);
-
-        /*temp*/
-        margin: 0 auto;
-        background-color: red;
     }
 
     .cpanel {
