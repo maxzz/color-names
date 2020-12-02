@@ -67,7 +67,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-bottom: 0.75vmin;
     }
+
+    @import "./styles/base.scss";
     @import "./styles/slider.scss";
 </style>
-
